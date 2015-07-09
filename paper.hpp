@@ -6,10 +6,22 @@
 
 namespace myun2
 {
-	namespace paper_script
+	class paper_script
 	{
-		using namespace myun2::nscript;
-	}
+	private:
+		myun2::nscript::tokenizer::token_list tokens;
+	public:
+		paper_script(const char* path) { load(path); }
+
+		bool load(const char* path)
+		{
+			myun2::nscript::loader ldr(path);
+			myun2::nscript::tokenizer tknzr;
+
+			tokens = tknzr.parse(ldr.data());
+			return true;
+		}
+	};
 }
 
 #endif///__MYUN2_GITHUB_COM__PAPER_SCRIPT_HPP__
