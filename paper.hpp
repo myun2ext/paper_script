@@ -8,8 +8,10 @@ namespace myun2
 {
 	class paper_script
 	{
+	public:
+		typedef myun2::nscript::tokenizer::token_list token_list, tokens_type;
 	private:
-		myun2::nscript::tokenizer::token_list tokens;
+		tokens_type tokens;
 	public:
 		paper_script(const char* path) { load(path); }
 
@@ -21,6 +23,28 @@ namespace myun2
 			tokens = tknzr.parse(ldr.data());
 			return true;
 		}
+		bool process()
+		{
+			bool commenting = false;
+			for(int i=0; i<tokens.size(); i++)
+			{
+				const ::std::string& token = tokens[i];
+				if ( !commenting )
+				{
+					if ( token == "#" )
+						commenting = true;
+					else
+						process_one(token);
+				}
+				else if ( token == "#" )
+					commenting = false;
+			}
+		}
+		bool process_one(const ::std::string& token)
+		{
+			puts(token.c_str());
+		}
+		bool run() { return process(); }
 	};
 }
 
