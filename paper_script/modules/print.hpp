@@ -12,13 +12,16 @@ namespace myun2
 			token_iterator last;
 			print(token_iterator it, const token_iterator end)
 			{
-				const ::std::string token = *it;
-				while ( token != "." && it != end )
+				while ( *it != "." && it != end )
 				{
-					if ( token != "\"" )
-						puts(token.c_str());
+					const ::std::string token = *it;
+					if ( token != "\"" ) {
+						fputs(token.c_str(), stdout);
+						fputs(" ", stdout);
+					}
 					it++;
 				}
+				puts("");
 				last = it;
 			}
 		};
