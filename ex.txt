@@ -1,2 +1,2 @@
 # Comment #
-print Hello
+print Hello world.

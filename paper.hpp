@@ -3,6 +3,7 @@
 
 #include "nscript/loader.hpp"
 #include "nscript/tokenizer.hpp"
+#include <map>
 
 namespace myun2
 {
@@ -13,6 +14,23 @@ namespace myun2
 		typedef typename token_list::iterator token_iterator;
 	private:
 		tokens_type tokens;
+		struct context {
+			struct function_caller_base {
+				virtual void call(token_iterator it, const token_iterator end) = 0;
+			}
+			template <typename Function>
+			struct function_caller : function_caller_base {
+				void call(token_iterator it, const token_iterator end) {
+					Function f(it, end);
+					return f.last;
+				}
+			}
+			::std::map< ::std::string, function_caller_base* > functions;
+			template <typename Function>
+			void register_function(const char* name) {
+				functions[name] = new function_caller<Function>;
+			}
+		};
 	public:
 		paper_script(const char* path) { load(path); }
 
@@ -45,7 +63,7 @@ namespace myun2
 			const ::std::string ope = *it++;
 			const ::std::string second = *it;
 			if ( ope == "print" )
-				puts(second.c_str());
+				return paper_script_builtin_modules::print(it, end);
 			return it;
 		}
 		bool run() { return process(); }

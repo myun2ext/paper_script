@@ -17,7 +17,9 @@ namespace myun2
 				{
 					if ( token != "\"" )
 						puts(token.c_str());
+					it++;
 				}
+				last = it;
 			}
 		};
 	}
