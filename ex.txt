@@ -1,3 +1,2 @@
-use module print.
-print "Hello".
-print "こんにちは".
+# Comment #
+print Hello

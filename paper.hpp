@@ -34,16 +34,19 @@ namespace myun2
 					if ( *it == "#" )
 						commenting = true;
 					else
-						process_line(it, tokens.end());
+						it = process_line(it, tokens.end());
 				}
 				else if ( *it == "#" )
 					commenting = false;
 			}
 		}
-		bool process_line(token_iterator it, token_iterator end)
+		token_iterator process_line(token_iterator it, token_iterator end)
 		{
-			const ::std::string token = *it;
-			puts(token.c_str());
+			const ::std::string ope = *it++;
+			const ::std::string second = *it;
+			if ( ope == "print" )
+				puts(second.c_str());
+			return it;
 		}
 		bool run() { return process(); }
 	};
