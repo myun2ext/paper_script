@@ -61,8 +61,11 @@ namespace myun2
 				{
 					if ( *it == "#" )
 						commenting = true;
-					else
+					else {
 						it = process_line(c, it, tokens.end());
+						if ( it == tokens.end() )
+							break;
+					}
 				}
 				else if ( *it == "#" )
 					commenting = false;

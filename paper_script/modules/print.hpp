@@ -12,7 +12,7 @@ namespace myun2
 			token_iterator last;
 			print(token_iterator it, const token_iterator end)
 			{
-				while ( *it != "." && it != end )
+				while ( it != end && *it != "." )
 				{
 					const ::std::string token = *it;
 					if ( token != "\"" ) {
