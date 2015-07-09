@@ -1,0 +1,4 @@
+## comment ##
+void test(int a, const char* c) {
+  return 3+4:$;
+}
