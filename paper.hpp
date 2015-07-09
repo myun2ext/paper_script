@@ -10,6 +10,7 @@ namespace myun2
 	{
 	public:
 		typedef myun2::nscript::tokenizer::token_list token_list, tokens_type;
+		typedef typename token_list::iterator token_iterator;
 	private:
 		tokens_type tokens;
 	public:
@@ -26,22 +27,22 @@ namespace myun2
 		bool process()
 		{
 			bool commenting = false;
-			for(int i=0; i<tokens.size(); i++)
+			for(token_iterator it=tokens.begin(); it != tokens.end(); it++)
 			{
-				const ::std::string& token = tokens[i];
 				if ( !commenting )
 				{
-					if ( token == "#" )
+					if ( *it == "#" )
 						commenting = true;
 					else
-						process_one(token);
+						process_line(it, tokens.end());
 				}
-				else if ( token == "#" )
+				else if ( *it == "#" )
 					commenting = false;
 			}
 		}
-		bool process_one(const ::std::string& token)
+		bool process_line(token_iterator it, token_iterator end)
 		{
+			const ::std::string token = *it;
 			puts(token.c_str());
 		}
 		bool run() { return process(); }
